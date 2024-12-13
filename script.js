@@ -101,3 +101,12 @@ document.addEventListener('DOMContentLoaded', function() {
 
     calculateRecipe(false);
 });
+
+// Add message listener for language switching
+window.addEventListener('message', function(event) {
+    if (event.data === 'switch-to-arabic') {
+        switchCalculatorLanguage('ar');
+    } else if (event.data === 'switch-to-english') {
+        switchCalculatorLanguage('en');
+    }
+});
