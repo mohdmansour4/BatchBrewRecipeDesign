@@ -3,46 +3,67 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Coffee Brewing Calculator</title>
+    <title>Coffee Brewing Calculator | حاسبة تحضير القهوة</title>
     <link rel="stylesheet" type="text/css" href="./styles.css">
 </head>
 <body>
     <div class="calculator">
-        <h1>Coffee Brewing Calculator</h1>
+        <h1>
+            <span data-lang="en">Coffee Brewing Calculator</span>
+            <span data-lang="ar" style="display: none;">حاسبة تحضير القهوة</span>
+        </h1>
         
-        <button id="toggleMode" class="toggle-mode">Switch to Brewer Capacity Mode</button>
+        <button id="toggleMode" class="toggle-mode">
+            <span data-lang="en">Switch to Brewer Capacity Mode</span>
+            <span data-lang="ar" style="display: none;">التبديل إلى وضع سعة الغلاية</span>
+        </button>
 
         <div id="calculatorForm">
             <div class="input-group" id="volumeInput">
-                <label for="brewVolume">Desired Brew Volume (L)</label>
+                <label for="brewVolume">
+                    <span data-lang="en">Desired Brew Volume (L)</span>
+                    <span data-lang="ar" style="display: none;">حجم التخمير المطلوب (لتر)</span>
+                </label>
                 <div class="stepper-input">
                     <input type="number" id="brewVolume" step="0.05" value="1.071" min="0">
                 </div>
             </div>
 
             <div class="input-group" id="capacityInput" style="display: none;">
-                <label for="brewerCapacity">Brewer Capacity (L)</label>
+                <label for="brewerCapacity">
+                    <span data-lang="en">Brewer Capacity (L)</span>
+                    <span data-lang="ar" style="display: none;">سعة الغلاية (لتر)</span>
+                </label>
                 <div class="stepper-input">
                     <input type="number" id="brewerCapacity" step="0.05" value="1.25" min="0">
                 </div>
             </div>
 
             <div class="input-group">
-                <label for="brewStrength">Desired Brew Strength (TDS%)</label>
+                <label for="brewStrength">
+                    <span data-lang="en">Desired Brew Strength (TDS%)</span>
+                    <span data-lang="ar" style="display: none;">قوة التخمير المطلوبة (٪TDS)</span>
+                </label>
                 <div class="stepper-input">
                     <input type="number" id="brewStrength" step="0.05" value="1.4" min="0">
                 </div>
             </div>
 
             <div class="input-group">
-                <label for="brewingRatio">Brewing Ratio</label>
+                <label for="brewingRatio">
+                    <span data-lang="en">Brewing Ratio</span>
+                    <span data-lang="ar" style="display: none;">نسبة التخمير</span>
+                </label>
                 <div class="stepper-input">
                     <input type="number" id="brewingRatio" step="0.5" value="16" min="15" max="17">
                 </div>
             </div>
 
             <div class="input-group">
-                <label for="liquidRetained">Liquid Retained Ratio</label>
+                <label for="liquidRetained">
+                    <span data-lang="en">Liquid Retained Ratio</span>
+                    <span data-lang="ar" style="display: none;">نسبة السائل المحتفظ به</span>
+                </label>
                 <div class="stepper-input">
                     <input type="number" id="liquidRetained" step="0.01" value="2.30" min="2" max="3">
                 </div>
@@ -50,18 +71,42 @@
         </div>
 
         <div class="results">
-            <h2>Results</h2>
+            <h2>
+                <span data-lang="en">Results</span>
+                <span data-lang="ar" style="display: none;">النتائج</span>
+            </h2>
             <div id="results">
-                <div class="result-item" id="coffeeNeeded"></div>
-                <div class="result-item" id="waterNeeded"></div>
-                <div class="result-item" id="totalWeight"></div>
-                <div class="result-item" id="extraction"></div>
+                <div class="result-item" id="coffeeNeeded">
+                    <span data-lang="en" data-result="coffee"></span>
+                    <span data-lang="ar" data-result="coffee" style="display: none;"></span>
+                </div>
+                <div class="result-item" id="waterNeeded">
+                    <span data-lang="en" data-result="water"></span>
+                    <span data-lang="ar" data-result="water" style="display: none;"></span>
+                </div>
+                <div class="result-item" id="totalWeight">
+                    <span data-lang="en" data-result="weight"></span>
+                    <span data-lang="ar" data-result="weight" style="display: none;"></span>
+                </div>
+                <div class="result-item" id="extraction">
+                    <span data-lang="en" data-result="extraction"></span>
+                    <span data-lang="ar" data-result="extraction" style="display: none;"></span>
+                </div>
             </div>
 
             <div class="extraction-info">
-                <p>Extraction between 18 to 21% is ideal</p>
-                <p>Below 18% is under-extracted, and likely to be sour</p>
-                <p>Over 21% is over-extracted, and likely to be bitter and dry</p>
+                <p>
+                    <span data-lang="en">Extraction between 18 to 21% is ideal</span>
+                    <span data-lang="ar" style="display: none;">نسبة الاستخلاص المثالية بين 18٪ و 21٪</span>
+                </p>
+                <p>
+                    <span data-lang="en">Below 18% is under-extracted, and likely to be sour</span>
+                    <span data-lang="ar" style="display: none;">أقل من 18٪ يعني استخلاص ضعيف، ومن المحتمل أن يكون حامضياً</span>
+                </p>
+                <p>
+                    <span data-lang="en">Over 21% is over-extracted, and likely to be bitter and dry</span>
+                    <span data-lang="ar" style="display: none;">أكثر من 21٪ يعني استخلاص زائد، ومن المحتمل أن يكون مراً وجافاً</span>
+                </p>
             </div>
         </div>
     </div>
