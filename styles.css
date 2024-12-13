@@ -16,7 +16,7 @@ body {
 }
 
 .calculator {
-    background: #f9f9f9;
+    background: #f5f5f5;
     padding: 30px;
     border-radius: 12px;
     box-shadow: 0 2px 15px rgba(0,0,0,0.1);
@@ -39,15 +39,26 @@ label {
     color: var(--text-color);
 }
 
+.input-container {
+    display: flex;
+    align-items: center;
+    justify-content: center; /* Center horizontally */
+    gap: 10px;
+    width: 100%; /* Take full width of parent */
+}
+
 .stepper-input {
+    /* Previous styles remain the same */
     position: relative;
     display: flex;
-    align-items: stretch;
+    align-items: center;
     height: 45px;
-    width: 100%;
+    width: 330px;
     border: 2px solid var(--border-color);
     border-radius: 6px;
     overflow: hidden;
+    margin: 0 auto; /* Remove left margin and center the input */
+    background: white;
 }
 
 .stepper-input input[type="number"] {
@@ -55,25 +66,27 @@ label {
     flex: 1;
     border: none;
     text-align: center;
-    padding: 0 40px;
+    padding: 0 45px;
     margin: 0;
     font-size: 16px;
     height: 100%;
     width: 100%;
     min-width: 0;
-    background: white;
+    background: transparent;
 }
 
+/* Hide default spinners */
 input[type="number"]::-webkit-outer-spin-button,
 input[type="number"]::-webkit-inner-spin-button {
     -webkit-appearance: none;
     margin: 0;
 }
 
+/* Custom stepper buttons */
 .stepper-input::before,
 .stepper-input::after {
     content: "";
-    width: 40px;
+    width: 45px;
     position: absolute;
     top: 0;
     bottom: 0;
@@ -85,6 +98,7 @@ input[type="number"]::-webkit-inner-spin-button {
     font-size: 20px;
     font-weight: bold;
     user-select: none;
+    transition: background-color 0.2s ease;
 }
 
 .stepper-input::before {
@@ -110,6 +124,7 @@ input:focus {
     border-color: var(--primary-color);
 }
 
+/* Results section */
 .results {
     margin-top: 30px;
     padding: 20px;
@@ -136,6 +151,7 @@ input:focus {
     color: #666;
 }
 
+/* Toggle button */
 .toggle-mode {
     background: var(--primary-color);
     color: white;
@@ -150,4 +166,22 @@ input:focus {
 
 .toggle-mode:hover {
     background: var(--hover-color);
+}
+
+/* RTL Support */
+[dir="rtl"] .stepper-input::before {
+    left: auto;
+    right: 0;
+    content: "+";
+}
+
+[dir="rtl"] .stepper-input::after {
+    right: auto;
+    left: 0;
+    content: "-";
+}
+
+[dir="rtl"] .results {
+    border-left: none;
+    border-right: 4px solid var(--primary-color);
 }
