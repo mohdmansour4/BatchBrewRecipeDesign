@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Coffee Brewing Calculator</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="calculator">
+        <h1>Coffee Brewing Calculator</h1>
+        
+        <button id="toggleMode" class="toggle-mode">Switch to Brewer Capacity Mode</button>
+
+        <div id="calculatorForm">
+            <div class="input-group" id="volumeInput">
+                <label for="brewVolume">Desired Brew Volume (L)</label>
+                <div class="stepper-input">
+                    <input type="number" id="brewVolume" step="0.05" value="1.071" min="0">
+                </div>
+            </div>
+
+            <div class="input-group" id="capacityInput" style="display: none;">
+                <label for="brewerCapacity">Brewer Capacity (L)</label>
+                <div class="stepper-input">
+                    <input type="number" id="brewerCapacity" step="0.05" value="1.25" min="0">
+                </div>
+            </div>
+
+            <div class="input-group">
+                <label for="brewStrength">Desired Brew Strength (TDS%)</label>
+                <div class="stepper-input">
+                    <input type="number" id="brewStrength" step="0.05" value="1.4" min="0">
+                </div>
+            </div>
+
+            <div class="input-group">
+                <label for="brewingRatio">Brewing Ratio</label>
+                <div class="stepper-input">
+                    <input type="number" id="brewingRatio" step="0.5" value="16" min="15" max="17">
+                </div>
+            </div>
+
+            <div class="input-group">
+                <label for="liquidRetained">Liquid Retained Ratio</label>
+                <div class="stepper-input">
+                    <input type="number" id="liquidRetained" step="0.01" value="2.30" min="2" max="3">
+                </div>
+            </div>
+        </div>
+
+        <div class="results">
+            <h2>Results</h2>
+            <div id="results">
+                <div class="result-item" id="coffeeNeeded"></div>
+                <div class="result-item" id="waterNeeded"></div>
+                <div class="result-item" id="totalWeight"></div>
+                <div class="result-item" id="extraction"></div>
+            </div>
+
+            <div class="extraction-info">
+                <p>Extraction between 18 to 21% is ideal</p>
+                <p>Below 18% is under-extracted, and likely to be sour</p>
+                <p>Over 21% is over-extracted, and likely to be bitter and dry</p>
+            </div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
