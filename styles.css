@@ -1,0 +1,160 @@
+:root {
+    --primary-color: #27949C;
+    --text-color: #333;
+    --border-color: #ddd;
+    --hover-color: #1b666c;
+}
+
+body {
+    font-family: system-ui, -apple-system, sans-serif;
+    max-width: 800px;
+    margin: 40px auto;
+    padding: 20px;
+    line-height: 1.6;
+    color: var(--text-color);
+    background-color: #f5f5f5;
+}
+
+/* Calculator Container */
+.calculator {
+    background: #fff;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 2px 15px rgba(0,0,0,0.1);
+}
+
+h1 {
+    color: var(--primary-color);
+    margin-bottom: 30px;
+    text-align: center;
+}
+
+/* Input Groups */
+.input-group {
+    margin-bottom: 25px;
+}
+
+label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 500;
+    color: var(--text-color);
+}
+
+/* Stepper Input */
+.stepper-input {
+    position: relative;
+    display: flex;
+    align-items: stretch;
+    height: 45px;
+    width: 100%;
+    border: 2px solid var(--border-color);
+    border-radius: 6px;
+    overflow: hidden;
+}
+
+.stepper-input input[type="number"] {
+    -moz-appearance: textfield;
+    flex: 1;
+    border: none;
+    text-align: center;
+    padding: 0 40px;
+    margin: 0;
+    font-size: 16px;
+    height: 100%;
+    width: 100%;
+    min-width: 0;
+    background: white;
+}
+
+/* Hide default steppers */
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+/* Custom stepper buttons */
+.stepper-input::before,
+.stepper-input::after {
+    content: "";
+    width: 40px;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    background: #e9ecef;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    font-weight: bold;
+    user-select: none;
+}
+
+.stepper-input::before {
+    content: "-";
+    left: 0;
+}
+
+.stepper-input::after {
+    content: "+";
+    right: 0;
+}
+
+.stepper-input::before:hover,
+.stepper-input::after:hover {
+    background: #dee2e6;
+}
+
+input:focus {
+    outline: none;
+}
+
+.stepper-input:focus-within {
+    border-color: var(--primary-color);
+}
+
+/* Results Section */
+.results {
+    margin-top: 30px;
+    padding: 20px;
+    background: #f8f9fa;
+    border-radius: 8px;
+    border-left: 4px solid var(--primary-color);
+}
+
+.results h2 {
+    color: var(--primary-color);
+    margin-top: 0;
+}
+
+.result-item {
+    margin: 15px 0;
+    font-size: 1.1em;
+}
+
+.extraction-info {
+    margin-top: 20px;
+    padding-top: 20px;
+    border-top: 1px solid var(--border-color);
+    font-size: 0.9em;
+    color: #666;
+}
+
+/* Toggle Button */
+.toggle-mode {
+    background: var(--primary-color);
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 16px;
+    margin-bottom: 20px;
+    transition: background-color 0.3s;
+}
+
+.toggle-mode:hover {
+    background: var(--hover-color);
+}
