@@ -1,3 +1,18 @@
+const resultTexts = {
+    en: {
+        coffee: (value) => `${value} grams of ground coffee`,
+        water: (value) => `${value} mL/grams of room temperature water`,
+        weight: (value) => `This brew should weigh ${value} grams on scales`,
+        extraction: (value) => `Target extraction is ${value}%`
+    },
+    ar: {
+        coffee: (value) => `${value} جرام من البن المطحون`,
+        water: (value) => `${value} مل/جرام من الماء بدرجة حرارة الغرفة`,
+        weight: (value) => `يجب أن يزن هذا المشروب ${value} جرام على الميزان`,
+        extraction: (value) => `نسبة الاستخلاص المستهدفة هي ${value}٪`
+    }
+};
+
 function calculateRecipe(isBrewerMode = false) {
     let targetBrewVolume;
     if (isBrewerMode) {
@@ -17,15 +32,33 @@ function calculateRecipe(isBrewerMode = false) {
     const totalWeight = waterNeeded - (coffeeNeeded * liquidRetained);
     const targetExtraction = (totalWeight / coffeeNeeded) * brewStrength;
 
-    document.getElementById('coffeeNeeded').textContent = 
-        `${coffeeNeeded.toFixed(1)} grams of ground coffee`;
-    document.getElementById('waterNeeded').textContent = 
-        `${waterNeeded.toFixed(0)} mL/grams of room temperature water`;
-    document.getElementById('totalWeight').textContent = 
-        `This brew should weigh ${totalWeight.toFixed(0)} grams on scales`;
-    document.getElementById('extraction').textContent = 
-        `Target extraction is ${targetExtraction.toFixed(2)}%`;
+    // Update results for both languages
+    ['en', 'ar'].forEach(lang => {
+        document.getElementById('coffeeNeeded').querySelector(`[data-lang="${lang}"]`).textContent = 
+            resultTexts[lang].coffee(coffeeNeeded.toFixed(1));
+            
+        document.getElementById('waterNeeded').querySelector(`[data-lang="${lang}"]`).textContent = 
+            resultTexts[lang].water(waterNeeded.toFixed(0));
+            
+        document.getElementById('totalWeight').querySelector(`[data-lang="${lang}"]`).textContent = 
+            resultTexts[lang].weight(totalWeight.toFixed(0));
+            
+        document.getElementById('extraction').querySelector(`[data-lang="${lang}"]`).textContent = 
+            resultTexts[lang].extraction(targetExtraction.toFixed(2));
+    });
 }
+
+window.switchCalculatorLanguage = function(lang) {
+    document.querySelectorAll('[data-lang]').forEach(el => {
+        el.style.display = 'none';
+    });
+    
+    document.querySelectorAll(`[data-lang="${lang}"]`).forEach(el => {
+        el.style.display = 'inline';
+    });
+
+    document.querySelector('.calculator').dir = lang === 'ar' ? 'rtl' : 'ltr';
+};
 
 document.addEventListener('DOMContentLoaded', function() {
     document.querySelectorAll('.stepper-input').forEach(stepper => {
