@@ -8,14 +8,14 @@
     --success-color: #00b300;
 }
 
-#calculator {
-    max-width: 450px;
-    margin: 0px auto;
-    padding: 30px;
-    background: #f5f5f5;
-    border-radius: 12px;
-    box-shadow: 0 2px 15px rgba(0,0,0,0.1);
+body {
     font-family: system-ui, -apple-system, sans-serif;
+    max-width: 800px;
+    margin: 40px auto;
+    padding: 20px;
+    line-height: 1.6;
+    color: var(--text-color);
+    background-color: #ffffff;
 }
 
 .calculator {
