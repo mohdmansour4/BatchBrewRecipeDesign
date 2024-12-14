@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Abel&display=swap');
+
+    body {
+      font-family: 'Abel', sans-serif;
+      text-align: center; /* Center the text */
+      line-height: 1.5;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100px; /* Set to minimum height */
+      padding: 0; /* Remove extra padding */
+      margin: 0; /* Remove extra margin */
+      box-sizing: border-box;
+    }
+
+    .language-text {
+      font-size: 20px; /* Body text size */
+      line-height: 1.5; /* Line spacing */
+      max-width: 600px; /* Optional: Limit width for better readability */
+      margin: 0; /* Minimal space around text */
+      color: #000000A1; /* Text color */
+    }
+
+    .header-text {
+      font-size: 27px; /* Increased header font size */
+      letter-spacing: 2.6px; /* Slight letter spacing */
+      text-transform: uppercase; /* Capitalize all letters */
+      margin-bottom: 27px; /* Add more space between header and body text */
+      color: #000000A1; /* Text color */
+    }
+  </style>
+</head>
+<body>
+  <!-- English Text (Default Visible) -->
+  <div id="text-english" class="language-text">
+    <div class="header-text">BATCH BREW RECIBE DESIGN</div>
+    Use this calculator to design your batch brew recipes. 
+  </div>
+
+  <!-- Arabic Text (Initially Hidden) -->
+  <div id="text-arabic" class="language-text" style="display: none;">
+    <div class="header-text">تصميم وصفة قهوة اليوم</div>
+يتم استخدام هذه الحاسبة لمعرفة لتصميم وصفات لقهوة اليوم.
+  <script>
+    // Listen for messages from the parent Carrd page to switch languages
+    window.addEventListener("message", (event) => {
+      const language = event.data;
+
+      if (language === "switch-to-arabic") {
+        // Show Arabic text, hide English text
+        document.getElementById("text-english").style.display = "none";
+        document.getElementById("text-arabic").style.display = "block";
+      } else if (language === "switch-to-english") {
+        // Show English text, hide Arabic text
+        document.getElementById("text-english").style.display = "block";
+        document.getElementById("text-arabic").style.display = "none";
+      }
+    });
+  </script>
+</body>
+</html>
