@@ -8,34 +8,24 @@
 </head>
 <body>
     <div class="calculator">
-        <h1>
-            <span data-lang="en">Coffee Brewing Calculator</span>
-            <span data-lang="ar" style="display: none;">حاسبة تحضير القهوة</span>
-        </h1>
-        
-        <button id="toggleMode" class="toggle-mode">
-            <span data-lang="en">Switch to Brewer Capacity Mode</span>
-            <span data-lang="ar" style="display: none;">التبديل إلى وضع سعة الغلاية</span>
-        </button>
+        <div class="calculator-header">
+            <button class="reset-btn" onclick="resetCalculator()" aria-label="Reset calculator">
+                <svg viewBox="0 0 24 24" width="16" height="16">
+                    <path fill="currentColor" d="M17.65 6.35A7.958 7.958 0 0012 4c-4.42 0-7.99 3.58-7.99 8s3.57 8 7.99 8c3.73 0 6.84-2.55 7.73-6h-2.08A5.99 5.99 0 0112 18c-3.31 0-6-2.69-6-6s2.69-6 6-6c1.66 0 3.14.69 4.22 1.78L13 11h7V4l-2.35 2.35z"/>
+                </svg>
+            </button>
+        </div>
 
         <div id="calculatorForm">
-            <div class="input-group" id="volumeInput">
+            <div class="input-group">
                 <label for="brewVolume">
                     <span data-lang="en">Desired Brew Volume (L)</span>
                     <span data-lang="ar" style="display: none;">حجم التخمير المطلوب (لتر)</span>
                 </label>
-                <div class="stepper-input">
+                <div class="stepper-input" role="spinbutton" aria-valuemin="0">
+                    <button type="button" class="stepper-btn minus">−</button>
                     <input type="number" id="brewVolume" step="0.05" value="1.071" min="0">
-                </div>
-            </div>
-
-            <div class="input-group" id="capacityInput" style="display: none;">
-                <label for="brewerCapacity">
-                    <span data-lang="en">Brewer Capacity (L)</span>
-                    <span data-lang="ar" style="display: none;">سعة الغلاية (لتر)</span>
-                </label>
-                <div class="stepper-input">
-                    <input type="number" id="brewerCapacity" step="0.05" value="1.25" min="0">
+                    <button type="button" class="stepper-btn plus">+</button>
                 </div>
             </div>
 
@@ -44,8 +34,11 @@
                     <span data-lang="en">Desired Brew Strength (TDS%)</span>
                     <span data-lang="ar" style="display: none;">قوة التخمير المطلوبة (٪TDS)</span>
                 </label>
-                <div class="stepper-input">
-                    <input type="number" id="brewStrength" step="0.05" value="1.4" min="0">
+                <div class="stepper-input" role="spinbutton" aria-valuemin="0" aria-valuemax="12">
+                    <button type="button" class="stepper-btn minus">−</button>
+                    <input type="number" id="brewStrength" step="0.05" value="1.4" min="0" max="12">
+                    <button type="button" class="stepper-btn plus">+</button>
+                    <div class="tooltip">Range: 0-12%</div>
                 </div>
             </div>
 
@@ -54,8 +47,11 @@
                     <span data-lang="en">Brewing Ratio</span>
                     <span data-lang="ar" style="display: none;">نسبة التخمير</span>
                 </label>
-                <div class="stepper-input">
+                <div class="stepper-input" role="spinbutton" aria-valuemin="15" aria-valuemax="17">
+                    <button type="button" class="stepper-btn minus">−</button>
                     <input type="number" id="brewingRatio" step="0.5" value="16" min="15" max="17">
+                    <button type="button" class="stepper-btn plus">+</button>
+                    <div class="tooltip">Range: 15-17</div>
                 </div>
             </div>
 
@@ -64,17 +60,16 @@
                     <span data-lang="en">Liquid Retained Ratio</span>
                     <span data-lang="ar" style="display: none;">نسبة السائل المحتفظ به</span>
                 </label>
-                <div class="stepper-input">
+                <div class="stepper-input" role="spinbutton" aria-valuemin="2" aria-valuemax="3">
+                    <button type="button" class="stepper-btn minus">−</button>
                     <input type="number" id="liquidRetained" step="0.01" value="2.30" min="2" max="3">
+                    <button type="button" class="stepper-btn plus">+</button>
+                    <div class="tooltip">Range: 2-3</div>
                 </div>
             </div>
         </div>
 
         <div class="results">
-            <h2>
-                <span data-lang="en">Results</span>
-                <span data-lang="ar" style="display: none;">النتائج</span>
-            </h2>
             <div id="results">
                 <div class="result-item" id="coffeeNeeded">
                     <span data-lang="en" data-result="coffee"></span>
@@ -100,15 +95,18 @@
                     <span data-lang="ar" style="display: none;">نسبة الاستخلاص المثالية بين 18٪ و 21٪</span>
                 </p>
                 <p>
-                    <span data-lang="en">Below 18% is under-extracted, and likely to be sour</span>
-                    <span data-lang="ar" style="display: none;">أقل من 18٪ يعني استخلاص ضعيف، ومن المحتمل أن يكون حامضياً</span>
+                    <span data-lang="en">Below 18% is under-extracted, and likely to be sour or week</span>
+                    <span data-lang="ar" style="display: none;">أقل من 18٪ يعني استخلاص منخفض Under-Extracted، ومن المحتمل أن تكون القهوة حمضية او خفيفة</span>
                 </p>
                 <p>
                     <span data-lang="en">Over 21% is over-extracted, and likely to be bitter and dry</span>
-                    <span data-lang="ar" style="display: none;">أكثر من 21٪ يعني استخلاص زائد، ومن المحتمل أن يكون مراً وجافاً</span>
+                    <span data-lang="ar" style="display: none;">أكثر من 21٪ يعني استخلاص زائد Over-Extraction، ومن المحتمل أن تكون القهوة مره اوتسبب تنشيف للسان</span>
                 </p>
             </div>
         </div>
+
+        <!-- Toast notification -->
+        <div id="toast" class="toast" role="alert" aria-live="polite"></div>
     </div>
     <script src="./script.js"></script>
 </body>
