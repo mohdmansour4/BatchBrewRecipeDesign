@@ -11,7 +11,7 @@
 body {
     font-family: system-ui, -apple-system, sans-serif;
     max-width: 800px;
-    margin: 40px auto;
+    margin: 0px auto;
     padding: 20px;
     line-height: 1.6;
     color: var(--text-color);
