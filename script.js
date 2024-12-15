@@ -7,27 +7,25 @@ const resultTexts = {
         extraction: (value) => `Target extraction is ${value}%`,
         invalidInput: "Please enter valid values",
         outOfRange: "Value out of allowed range",
-        reset: "Calculator reset to default values"
+        reset: "Calculator values reset"
     },
     ar: {
-        coffee: (value) => `${value} جرام من البن `,
+        coffee: (value) => `${value} جرام من القهوة `,
         water: (value) => `${value} مل/جرام من الماء بدرجة حرارة الغرفة`,
         weight: (value) => `يجب ان يكون وزن القهوة ${value} جرام على الميزان`,
         extraction: (value) => `نسبة الاستخلاص المستهدفة هي ${value}٪`,
         invalidInput: "الرجاء إدخال قيم صحيحة",
         outOfRange: "القيمة خارج النطاق المسموح به",
-        reset: "تمت إعادة تعيين الحاسبة إلى القيم الافتراضية"
+        reset: "تم إعادة تعيين قيم الحاسبة"
     }
 };
 
 let currentLang = 'en';
 
-// Default values for the calculator
-const defaultValues = {
-    brewVolume: "2",
-    brewStrength: "1.40",
-    brewingRatio: "16.5",
-    liquidRetained: "2.3"
+// Default ratio values
+const defaultRatios = {
+    brewingRatio: "16",
+    liquidRetained: "2.30"
 };
 
 // Format numbers to prevent excessive decimals
@@ -43,17 +41,6 @@ function showToast(message, duration = 3000) {
     setTimeout(() => toast.classList.remove('show'), duration);
 }
 
-// Reset calculator to default values
-function resetCalculator() {
-    document.querySelectorAll('input[type="number"]').forEach(input => {
-        input.value = defaultValues[input.id] || '';
-        input.closest('.stepper-input').classList.remove('invalid');
-    });
-    calculateRecipe();
-    localStorage.removeItem('coffeeCalculatorValues');
-    showToast(resultTexts[currentLang].reset);
-}
-
 // Validate input values
 function validateInput(input) {
     const value = parseFloat(input.value);
@@ -67,6 +54,37 @@ function validateInput(input) {
     }
     input.closest('.stepper-input').classList.remove('invalid');
     return true;
+}
+
+// Reset calculator with selective clearing
+function resetCalculator() {
+    // Clear volume and strength inputs
+    ['brewVolume', 'brewStrength'].forEach(id => {
+        const input = document.getElementById(id);
+        if (input) {
+            input.value = '';
+            input.closest('.stepper-input').classList.remove('invalid');
+        }
+    });
+
+    // Reset ratios to default values
+    Object.entries(defaultRatios).forEach(([id, value]) => {
+        const input = document.getElementById(id);
+        if (input) {
+            input.value = value;
+            input.closest('.stepper-input').classList.remove('invalid');
+        }
+    });
+
+    // Clear all results
+    document.querySelectorAll('[data-result]').forEach(result => {
+        result.textContent = '';
+    });
+
+    // Remove stored values
+    localStorage.removeItem('coffeeCalculatorValues');
+    
+    showToast(resultTexts[currentLang].reset);
 }
 
 // Save calculator state
@@ -91,36 +109,44 @@ function loadSavedValues() {
                 validateInput(input);
             }
         });
-    } else {
-        // Load default values if no saved values exist
-        Object.entries(defaultValues).forEach(([id, value]) => {
-            const input = document.getElementById(id);
-            if (input) input.value = value;
-        });
+        calculateRecipe();
     }
-    calculateRecipe();
 }
 
-// Main calculation function
+// Calculate recipe
 function calculateRecipe() {
-    const brewVolume = parseFloat(document.getElementById('brewVolume').value);
-    const brewStrength = parseFloat(document.getElementById('brewStrength').value);
-    const brewingRatio = parseFloat(document.getElementById('brewingRatio').value);
-    const liquidRetained = parseFloat(document.getElementById('liquidRetained').value);
+    const inputs = document.querySelectorAll('input[type="number"]');
+    const values = {};
+    
+    // Check if any inputs are empty
+    let hasEmptyInputs = false;
+    inputs.forEach(input => {
+        if (!input.value) {
+            hasEmptyInputs = true;
+        }
+        values[input.id] = parseFloat(input.value);
+    });
+
+    // If any inputs are empty, clear results and return
+    if (hasEmptyInputs) {
+        document.querySelectorAll('[data-result]').forEach(result => {
+            result.textContent = '';
+        });
+        return;
+    }
 
     // Validate all inputs
-    const inputs = ['brewVolume', 'brewStrength', 'brewingRatio', 'liquidRetained'];
-    if (inputs.some(id => !validateInput(document.getElementById(id)))) {
+    if ([...inputs].some(input => !validateInput(input))) {
         showToast(resultTexts[currentLang].invalidInput);
         return;
     }
-    
+
     // Calculate results
-    const volumeInMl = brewVolume * 1000;
-    const coffeeNeeded = formatNumber(volumeInMl / brewingRatio, 0.1);
+    const volumeInMl = values.brewVolume * 1000;
+    const coffeeNeeded = formatNumber(volumeInMl / values.brewingRatio, 0.1);
     const waterNeeded = formatNumber(volumeInMl, 1);
-    const totalWeight = formatNumber(waterNeeded - (coffeeNeeded * liquidRetained), 1);
-    const targetExtraction = formatNumber((totalWeight / coffeeNeeded) * brewStrength, 0.01);
+    const totalWeight = formatNumber(waterNeeded - (coffeeNeeded * values.liquidRetained), 1);
+    const targetExtraction = formatNumber((totalWeight / coffeeNeeded) * values.brewStrength, 0.01);
 
     // Update results for both languages
     ['en', 'ar'].forEach(lang => {
